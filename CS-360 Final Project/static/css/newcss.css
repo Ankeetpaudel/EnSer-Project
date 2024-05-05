@@ -1,0 +1,366 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*,
+::after,
+::before {
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Poppins', sans-serif;
+font-size: 0.875rem;
+opacity: 1;
+overflow-y: scroll;
+margin: 0;
+}
+
+a {
+cursor: pointer;
+text-decoration: none;
+font-family: 'Poppins', sans-serif;
+}
+
+li {
+list-style: none;
+}
+
+h4 {
+font-family: 'Poppins', sans-serif;
+font-size: 2rem;
+color:black;
+font-style: bold;
+text-decoration: underline;
+}
+h13{
+font-family: 'Poppins', sans-serif;
+font-size: 1.5rem;
+color: black;
+font-style: bold;
+}
+p11{
+color: black;
+}
+
+/* Layout for admin dashboard skeleton */
+
+.wrapper {
+align-items: stretch;
+display: flex;
+width: 100%;
+}
+
+#sidebar {
+max-width: 264px;
+min-width: 264px;
+background: rgb(8, 66, 120);
+transition: all 0.35s ease-in-out;
+}
+
+.main {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+min-width: 0;
+overflow: hidden;
+transition: all 0.35s ease-in-out;
+width: 100%;
+background: white;
+}
+
+/* Sidebar Elements Style */
+
+.sidebar-logo {
+padding: 1.15rem;
+}
+
+.sidebar-logo a {
+color: #e9ecef;
+font-size: 1.15rem;
+font-weight: 600;
+}
+
+.sidebar-nav {
+flex-grow: 1;
+list-style: none;
+margin-bottom: 0;
+padding-left: 0;
+margin-left: 0;
+}
+
+.sidebar-header {
+color:rgb(8, 66, 120);
+font-size: .75rem;
+padding: 1.5rem 1.5rem .375rem;
+}
+
+a.sidebar-link {
+padding: .625rem 1.625rem;
+color: #e9ecef;
+position: relative;
+display: block;
+font-size: 0.875rem;
+}
+a.button {
+padding: .625rem 1.625rem;
+color: #e9ecef;
+position: relative;
+display: block;
+font-size: 0.875rem;
+}
+
+
+.sidebar-link[data-bs-toggle="collapse"]::after {
+border: solid;
+border-width: 0 .075rem .075rem 0;
+content: "";
+display: inline-block;
+padding: 2px;
+position: absolute;
+right: 1.5rem;
+top: 1.4rem;
+transform: rotate(-135deg);
+transition: all .2s ease-out;
+}
+button[data-bs-toggle="collapse"]::after {
+border: solid;
+border-width: 0 .075rem .075rem 0;
+content: "";
+display: inline-block;
+padding: 2px;
+position: absolute;
+right: 1.5rem;
+top: 1.4rem;
+transform: rotate(-135deg);
+transition: all .2s ease-out;
+}
+
+.sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+transform: rotate(45deg);
+transition: all .2s ease-out;
+}
+
+.button[data-bs-toggle="collapse"].collapsed::after {
+transform: rotate(45deg);
+transition: all .2s ease-out;
+}
+
+.avatar {
+height: 40px;
+width: 40px;
+}
+
+.navbar-expand .navbar-nav {
+margin-left: auto;
+}
+
+.content {
+flex: 1;
+max-width: 100vw;
+width: 100vw;
+}
+
+@media (min-width:768px) {
+.content {
+max-width: auto;
+width: auto;
+}
+}
+
+.card {
+box-shadow: 0 0 .875rem 0 rgba(34, 46, 60, .05);
+margin-bottom: 24px;
+}
+
+.illustration {
+background-color: var(--bs-primary-bg-subtle);
+color: var(--bs-emphasis-color);
+}
+
+.illustration-img {
+max-width: 150px;
+width: 100%;
+}
+
+/* Sidebar Toggle */
+
+#sidebar.collapsed {
+margin-left: -264px;
+}
+
+/* Footer and Nav */
+
+@media (max-width:767.98px) {
+
+.js-sidebar {
+margin-left: -264px;
+}
+
+#sidebar.collapsed {
+margin-left: 0;
+}
+
+.navbar,
+footer {
+width: 100vw;
+}
+}
+
+/* Theme Toggler */
+
+.theme-toggle {
+position: fixed;
+top: 50%;
+transform: translateY(-65%);
+text-align: center;
+z-index: 10;
+right: 0;
+left: auto;
+border: none;
+background-color: var(--bs-body-color);
+}
+
+html[data-bs-theme="dark"] .theme-toggle .fa-sun,
+html[data-bs-theme="light"] .theme-toggle .fa-moon {
+cursor: pointer;
+padding: 10px;
+display: block;
+font-size: 1.25rem;
+color: #FFF;
+}
+
+html[data-bs-theme="dark"] .theme-toggle .fa-moon {
+display: none;
+}
+
+html[data-bs-theme="light"] .theme-toggle .fa-sun {
+display: none;
+}
+
+/* Ensures the modal content uses all available space */
+.modal-content {
+display: flex;
+flex-direction: column; /* Makes children stack vertically */
+}
+
+.modal-body {
+flex: 1; 
+display: flex; 
+padding: 0; 
+}
+
+#syllabusText {
+flex: 1; 
+width: 100%; /* Full width */
+resize: none; 
+border: none; 
+padding: 10px; 
+box-sizing: border-box; /* Includes padding in the width calculation */
+}
+
+#pdfViewerModal .modal-dialog {
+max-width: 90%; 
+height: 95%; 
+}
+#pdfViewerModal .modal-body {
+height: 80vh; /* Make the modal body 80% of the viewport height */
+}
+
+#pdfIframe {
+width: 100%; 
+height: 100%; 
+}
+
+
+#pdfViewerModal .modal-dialog {
+max-width: 90%; 
+height: 90vh; 
+margin: 0.5rem auto;
+display: flex;
+align-items: center; 
+}
+
+#pdfViewerModal .modal-content {
+height: 100%; 
+}
+
+#pdfViewerModal .modal-body {
+overflow-y: auto; 
+height: calc(100% - 56px); /* Subtract the height of modal-header and modal-footer if any */
+}
+.move-div{
+position:absolute;
+top:220px;
+color: blue;
+}
+.move1-div{
+position:absolute;
+top:220px;
+}
+a.sidebar-link:hover {
+background-color: #f0f0f0; /* Light grey background on hover */
+color: #000; /* Black text color on hover */
+}
+a.sidebar-link.active {
+background-color: #f0f0f0 ; 
+color: #000;/* White text color for better visibility */
+}
+
+
+/* Modal general styling */
+#decisionModal .modal-content {
+background: #ffffff; /* White background */
+color: #000000; /* Black text */
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#decisionModal .modal-header {
+border-bottom: 1px solid #eaeaea; /* Light grey border */
+background-color: #f9f9f9; /* Light grey background for the header */
+}
+
+#decisionModal .modal-title {
+font-weight: bold;
+color: #000000; /* Black color for title */
+}
+
+#decisionModal .btn-close {
+filter: invert(0); /* Keep the close button black */
+}
+
+#decisionModal .modal-body {
+font-size: 1.2rem; 
+padding: 20px; 
+line-height: 1.5; 
+color: #000000; 
+}
+
+/* Button styling */
+#decisionModal .btn-info {
+background-color: #e0e0e0; 
+color: #000000; 
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+transition: all 0.3s ease;
+}
+
+#decisionModal .btn-info:hover {
+background-color: #cfcfcf; 
+color: #000000; 
+}
+
+#uploadModal .modal-content {
+background: #f8f9fa; 
+border-radius: 0.3rem; 
+border: 1px solid #dee2e6; /* A subtle border */
+}
+
+#uploadModal .modal-header {
+background: #007bff; 
+color: #ffffff; /* White text for contrast */
+}
+
+#uploadModal .btn-primary {
+width: 50%; 
+}

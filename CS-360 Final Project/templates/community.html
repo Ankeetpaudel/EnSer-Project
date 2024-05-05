@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <aside id="sidebar" class="js-sidebar">
+            <div class="h-100">
+                <div class="sidebar-logo">
+                    <a href="#">EnSer</a>
+                </div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-header">Elements</li>
+                    <li class="sidebar-item">
+                        <a href="#" id="dashboardlink" class="sidebar-link" data-target="dashboard">
+                            <i class="fa-solid fa-list pe-2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-target="projects">
+                            <i class="fa-solid fa-file-lines pe-2"></i> Upload
+                            Projects
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-target="uploadedProjects">
+                            <i class="fa-solid fa-cloud-upload pe-2"></i> Uploaded
+                            Projects
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-target="feedback">
+                            <i class="fa-regular fa-user pe-2"></i> Feedback
+                        </a>
+                    </li>
+                    <a href="/logout" class="button" id="logoutLink">
+                        <i class="fa-solid fa-right-from-bracket pe-2"></i> Logout
+                    </a>
+                </ul>
+            </div>
+        </aside>
+        <div class="main">
+            <nav class="navbar navbar-expand px-3 border-bottom">
+                <button class="btn" id="sidebar-toggle" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="ms-auto">
+                    <span class="navbar-text">
+                        <i class="fa-solid fa-user"></i> Welcome, <span id="userFirstName">{{ session['first_name']
+                            }}</span> <span id="userLastName">{{ session['last_name'] }}</span>
+                    </span>
+
+                </div>
+            </nav>
+            <main class="content px-3 py-2">
+                <div class="container-fluid">
+                    <div id="dashboard" class="content-section">
+                        <br>
+                        <h4>Community Dashboard</h4>
+                        <div class=" move-div col-md-1">
+                            <img src="https://linkr.com/en/academy/wp-content/uploads/2023/03/community-2.jpg"
+                                alt="Community Image" height="300px" width="430px">
+                        </div>
+                        <div class="move1-div col-12 col-md-4 offset-md-5 d-md-block d-lg-none mt-md-3">
+                            <h3>Welcome to the Community Dashboard.</h3>
+                            <p>Welcome to our community project hub! Here, members share project titles and detailed
+                                descriptions to spark inspiration for students. Students can choose from a variety of
+                                exciting projects, select one that resonates with them, and begin their journey. After
+                                completing their project, students will showcase their work by uploading it and receive
+                                constructive feedback from our supportive community. Let's collaborate, innovate, and
+                                grow together!</p>
+                        </div>
+                        <div class="move1-div col-12 col-md-4 offset-md-5 d-none d-lg-block">
+                            <h3>Welcome to the Community Dashboard.</h3>
+                            <p>Welcome to our community project hub! Here, members share project titles and detailed
+                                descriptions to spark inspiration for students. Students can choose from a variety of
+                                exciting projects, select one that resonates with them, and begin their journey. After
+                                completing their project, students will showcase their work by uploading it and receive
+                                constructive feedback from our supportive community. Let's collaborate, innovate, and
+                                grow together!</p>
+                        </div>
+
+                    </div>
+                    <div id="projects" class="content-section" style="display:none">
+                        <div class="card">
+                            <div class="container">
+                                <h2>Upload Projects</h2>
+                                <p class="title">Upload your latest projects.</p>
+                                <form id="uploadProjectForm">
+                                    <div class="form-group">
+                                        <label for="projectDepartment">Select Project
+                                            Department:</label>
+                                        <select id="projectDepartment" name="projectDepartment" class="form-control"
+                                            required>
+                                            <option value>Please select a
+                                                department</option>
+                                            <option value="Civil Engineering">Civil
+                                                Engineering</option>
+                                            <option value="Mechanical Engineering">Mechanical
+                                                Engineering</option>
+                                            <option value="Electrical Engineering">Electrical
+                                                Engineering</option>
+                                            <option value="Computer Engineering">Computer
+                                                Engineering</option>
+                                            <option value="Chemical Engineering">Chemical
+                                                Engineering</option>
+                                            <option value="Aerospace Engineering">Aerospace
+                                                Engineering</option>
+                                            <option value="Nuclear Engineering">Nuclear
+                                                Engineering</option>
+                                            <option value="Biomedical Engineering">Biomedical
+                                                Engineering</option>
+                                            <option value="Industrial Engineering">Industrial
+                                                Engineering</option>
+                                            <option value="Environmental Engineering">Environmental
+                                                Engineering</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="projectTitle">Project
+                                            Title:</label>
+                                        <input type="text" id="projectTitle" name="projectTitle" class="form-control"
+                                            placeholder="Enter project title" required
+                                            oninput="this.style.fontWeight = 'bold'">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="projectDescription">Project
+                                            Description:</label>
+                                        <textarea id="projectDescription" name="projectDescription" rows="15"
+                                            class="form-control" placeholder="Describe your project (up to 500 words)"
+                                            required oninput="limitWords(this)"></textarea>
+                                    </div>
+                                    <p>
+                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                    </p>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="uploadedProjects" class="content-section"
+                        style="background-color: lightblue; display: none;">
+                        <div class="card">
+                            <div class="container">
+                                <h2>Uploaded Projects</h2>
+                                <p class="title">View projects you've uploaded.</p>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" id="searchTitle" class="form-control"
+                                            placeholder="Search by Title" oninput="filterProjects()">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" id="searchDepartment" class="form-control"
+                                            placeholder="Search by Department" oninput="filterProjects()">
+                                    </div>
+                                </div>
+                                <div id="uploadedProjectsList"></div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <div id="feedback" class="content-section" style="display:none">
+                        <div class="card">
+                            <div class="container">
+                                <h2>Feedback</h2>
+                                <p class="title">Provide feedback for projects.</p>
+
+                                <input type="text" id="searchProjectTitle" class="form-control mb-3"
+                                    placeholder="Search by Project Title" oninput="filterFeedbackTable()">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>Project Title</th>
+                                            <th>Professor Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="feedbackTableBody">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div id="feedbackModal" class="modal fade" tabindex="-1" aria-labelledby="feedbackModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="feedbackModalLabel">Provide Feedback</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+
+                                    <input type="hidden" id="hiddenSubmissionId" value="">
+                                </div>
+                                <div class="modal-body">
+                                    <textarea id="feedbackText" class="form-control" rows="4"
+                                        placeholder="Enter your feedback here..."></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="submitFeedback()">Submit
+                                        Feedback</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div id="pdfViewerModal" class="modal fade" tabindex="-1" aria-labelledby="pdfViewerModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="pdfViewerModalLabel">View PDF</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <iframe id="pdfIframe" src="" style="width:100%; height:100%;"
+                                        frameborder="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div id="feedbackViewModal" class="modal fade" tabindex="-1"
+                        aria-labelledby="feedbackViewModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="feedbackViewModalLabel">View Feedback</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="feedbackViewModalBody">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                </div>
+        </div>
+    </div>
+    </main>
+    <a href="#" class="theme-toggle">
+        <i class="fa-regular fa-moon"></i>
+        <i class="fa-regular fa-sun"></i>
+    </a>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Consolidate sidebar navigation handling
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('data-target');
+                    const sections = document.querySelectorAll('.content-section');
+                    sections.forEach(section => section.style.display = 'none');
+
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.style.display = 'block';
+                    }
+
+                    // Special handling for uploaded projects
+                    if (targetId === 'uploadedProjects') {
+                        fetchUploadedProjects(); // Ensure this function is correctly defined
+                    }
+                });
+            });
+
+            // Handle project upload form submission
+            const uploadForm = document.getElementById("uploadProjectForm");
+            if (uploadForm) {
+                uploadForm.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    const formData = {
+                        project_department: document.getElementById("projectDepartment").value,
+                        title: document.getElementById("projectTitle").value,
+                        description: document.getElementById("projectDescription").value
+                    };
+
+                    fetch('/upload_project', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    }).then(response => {
+                        if (!response.ok) throw new Error('Failed to upload project');
+                        return response.json();
+                    }).then(data => {
+                        alert(data.message);
+                        
+
+                        // Optionally, clear the form here if needed
+                        uploadForm.reset();
+                    }).catch(error => {
+                        console.error('Error:', error);
+                        alert('Error uploading project: ' + error.message);
+                    });
+                });
+            }
+        });
+
+
+
+
+        function fetchUploadedProjects() {
+            fetch('/get_uploaded_projects')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);  // Check the data here
+                    const projectsList = document.getElementById('uploadedProjectsList');
+                    projectsList.innerHTML = '';  // Clear existing content
+
+                    if (data.length === 0) {
+                        projectsList.textContent = 'No projects available.';
+                        return;
+                    }
+
+                    const table = createProjectsTable(data);
+                    projectsList.appendChild(table);
+                })
+                .catch(error => {
+                    console.error('Error fetching projects:', error);
+                    alert('Failed to load projects: ' + error.message);
+                });
+        }
+
+
+
+
+        function createProjectsTable(projects) {
+            const table = document.createElement('table');
+            table.className = 'table table-striped';  // Adding Bootstrap table classes for styling
+
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+
+            // Table header
+            const headerRow = document.createElement('tr');
+            ['ID', 'Title', 'Department', 'Description'].forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            // Table body
+            projects.forEach(project => {
+                const tr = document.createElement('tr');
+                ['project_id', 'title', 'department', 'description'].forEach(key => {  
+                    const td = document.createElement('td');
+                    td.textContent = project[key];
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            return table;
+        }
+
+
+
+        // Function to handle View Project button click
+        function viewPDF(submissionId) {
+
+            const url = `/api/serve_pdf/${submissionId}`;
+            const pdfIframe = document.getElementById('pdfIframe');
+            pdfIframe.src = url; // Set the PDF URL to the iframe
+
+            // Fetch and display the modal
+            const pdfModal = new bootstrap.Modal(document.getElementById('pdfViewerModal'), {
+                keyboard: true
+            });
+            pdfModal.show(); // Open the modal with the PDF
+        }
+
+
+
+
+        // Function to open the feedback modal
+        function openFeedbackModal(submissionId) {
+            document.getElementById('hiddenSubmissionId').value = submissionId;
+            const feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
+            feedbackModal.show();
+        }
+
+
+        // Function to submit feedback 
+        function submitFeedback() {
+            const submissionId = document.getElementById('hiddenSubmissionId').value;
+            const feedbackText = document.getElementById('feedbackText').value;
+
+            fetch('/submit-feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ submission_id: submissionId, content: feedbackText })
+            }).then(response => response.json())
+                .then(data => {
+                    alert("Feedback submitted: " + data.message);
+                    const feedbackModal = bootstrap.Modal.getInstance(document.getElementById('feedbackModal'));
+                    feedbackModal.hide();
+                })
+                .catch(error => {
+                    console.error('Error submitting feedback:', error);
+                    alert('Failed to submit feedback: ' + error.message);
+                });
+        }
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const feedbackTableBody = document.getElementById('feedbackTableBody');
+
+            fetch('/get-feedback-data')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+    <td>${item.student_name}</td>
+    <td>${item.project_title}</td>
+    <td>${item.professor_name}</td>
+    <td>
+        <button class="btn btn-secondary" onclick="viewPDF(${item.submission_id})">View Project</button>
+        <button class="btn btn-primary" onclick="openFeedbackModal(${item.submission_id})">Provide Feedback</button>
+        <button class="btn btn-info" onclick="viewFeedback(${item.submission_id})">View Feedback</button>  
+    </td>
+`;
+
+                        feedbackTableBody.appendChild(row);
+                    });
+
+
+
+                })
+                .catch(error => {
+                    console.error('Error loading the feedback data:', error);
+                });
+        });
+
+
+        function viewFeedback(submissionId) {
+            const url = `/get-feedback-for-submission/${submissionId}`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const feedbackViewModalBody = document.getElementById('feedbackViewModalBody');
+                    feedbackViewModalBody.innerHTML = '';  // Clear previous content
+
+                    if (data.length === 0) {
+                        feedbackViewModalBody.innerHTML = '<p>No feedback available for this submission.</p>';
+                    } else {
+                        const table = document.createElement('table');
+                        table.classList.add('table');
+
+
+                        const thead = document.createElement('thead');
+                        const headerRow = document.createElement('tr');
+                        const headers = ['Number', 'Feedback Content', 'Posted On'];
+                        headers.forEach(headerText => {
+                            const th = document.createElement('th');
+                            th.textContent = headerText;
+                            headerRow.appendChild(th);
+                        });
+                        thead.appendChild(headerRow);
+                        table.appendChild(thead);
+
+                        // Create table body
+                        const tbody = document.createElement('tbody');
+                        data.forEach((feedback, index) => {
+                            const tr = document.createElement('tr');
+                            const numberCell = document.createElement('td');
+                            numberCell.textContent = index + 1; 
+                            const contentCell = document.createElement('td');
+                            contentCell.textContent = feedback.content;
+                            const createdAtCell = document.createElement('td');
+                            createdAtCell.textContent = feedback.created_at;
+                            tr.appendChild(numberCell);
+                            tr.appendChild(contentCell);
+                            tr.appendChild(createdAtCell);
+                            tbody.appendChild(tr);
+                        });
+                        table.appendChild(tbody);
+                        feedbackViewModalBody.appendChild(table);
+                    }
+
+                   
+                    const feedbackViewModal = new bootstrap.Modal(document.getElementById('feedbackViewModal'), {
+                        keyboard: true
+                    });
+                    feedbackViewModal.show();
+                })
+                .catch(error => {
+                    console.error('Error fetching feedback:', error);
+                    alert('Failed to load feedback: ' + error.message);
+                });
+        }
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                   
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+
+                    
+                    this.classList.add('active');
+                });
+            });
+        });
+
+
+        function refreshProjectsList() {
+            fetch('/api/get_recent_projects')
+                .then(response => response.json())
+                .then(projects => {
+                    const projectsList = document.getElementById('projectsList');
+                    projectsList.innerHTML = '';
+                    projects.forEach(project => {
+                        const item = document.createElement('li');
+                        item.textContent = project.title;
+                        projectsList.appendChild(item);
+                    });
+                })
+                .catch(error => console.error('Failed to refresh projects list:', error));
+        }
+
+
+        function filterProjects() {
+            const titleInput = document.getElementById('searchTitle').value.toLowerCase();
+            const departmentInput = document.getElementById('searchDepartment').value.toLowerCase();
+            const projectsList = document.getElementById('uploadedProjectsList');
+            const rows = projectsList.querySelectorAll('tr');
+            rows.forEach(row => {
+                const title = row.cells[1].textContent.toLowerCase();
+                const department = row.cells[2].textContent.toLowerCase();
+                if (title.includes(titleInput) && department.includes(departmentInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+
+
+        function filterFeedbackTable() {
+            const input = document.getElementById('searchProjectTitle').value.toLowerCase();
+            const table = document.getElementById('feedbackTableBody');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                let title = rows[i].getElementsByTagName("td")[1];
+                if (title) {
+                    let textValue = title.textContent || title.innerText;
+                    if (textValue.toLowerCase().indexOf(input) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+
+    </script>
+
+</body>
+
+</html>

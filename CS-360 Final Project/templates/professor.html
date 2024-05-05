@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Professor Dashboard</title>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css">
+   <script src="https://kit.fontawesome.com/ae360af17e.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="/static/css/newcss.css">
+</head>
+
+<body>
+   <div class="wrapper">
+      <aside id="sidebar" class="js-sidebar">
+         <div class="h-100">
+            <div class="sidebar-logo">
+               <a href="#">EnSer</a>
+            </div>
+            <ul class="sidebar-nav">
+               <li class="sidebar-header">Elements</li>
+               <li class="sidebar-item">
+                  <a href="#" class="sidebar-link" data-target="dashboard">
+                     <i class="fa-solid fa-list pe-2"></i> Dashboard
+                  </a>
+               </li>
+               <li class="sidebar-item">
+                  <a href="#" class="sidebar-link" data-target="Notification">
+                     <i class="fa-solid fa-file-lines pe-2"></i> Notification
+                  </a>
+               </li>
+               <li class="sidebar-item">
+                  <a href="#" class="sidebar-link" data-target="Syllabus">
+                     <i class="fa-regular fa-user pe-2"></i> Edit Syllabus
+                  </a>
+
+               </li>
+               <li class="sidebar-item">
+                  <a href="#" class="sidebar-link" data-target="Submission">
+                     <i class="fa-regular fa-user pe-2"></i> See Syllabus
+                  </a>
+               </li>
+               <li class="sidebar-item">
+                  <a href="#" class="sidebar-link" data-target="StudentUpdate">
+                     <i class="fa-regular fa-user pe-2"></i> Student Update
+                  </a>
+               </li>
+               <li class="sidebar-item">
+                  <a href="/logout" class="button" id="logoutLink">
+                     <i class="fa-solid fa-right-from-bracket pe-2"></i>
+                     Logout
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </aside>
+      <div class="main">
+         <nav class="navbar navbar-expand-lg px-3 border-bottom">
+            <button class="btn" id="sidebar-toggle" type="button">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+         </nav>
+         <main class="content px-3 py-2">
+            <div class="container-fluid">
+               <div id="dashboard" class="content-section" style="display: none;">
+                  <h4>Professor Dashboard</h4>
+                  <div class=" move-div col-md-1">
+                     <img
+                        src="https://img.freepik.com/premium-photo/confident-businessman-delivering-presentation-consulting-training-persuading-employees-client-group-mentor-leader-explain-graph-strategy-team-meeting-workshop-vector-illustration_1025467-5821.jpg"
+                        alt="student Image" height="250px" width="430px">
+                  </div>
+                  <div class="move1-div offset-md-5 col-md-4">
+                     <h13>Welcome to the professor Dashboard.</h13> <br><br>
+                     <p11> The professor dashboard streamlines academic workflows by providing access to an
+                        auto-generated syllabus, saving valuable time. Professors can edit syllabus and sent to the
+                        studetns. They can also view student submissions and grade completed work. Additionally, they
+                        can interact with notifications and have tools at their disposal to efficiently manage their
+                        academic responsibilities.
+                     </p11>
+                  </div>
+               </div>
+               <div id="Notification" class="content-section" style="display:none;">
+                  <div class="card">
+                     <div class="container">
+                        <h2>Notifications</h2>
+                        <p class="title">See the students requests for
+                           project.</p>
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th>Student Name</th>
+                                 <th>Student ID</th>
+                                 <th>Project Title</th>
+                                 <th>Description</th>
+                                 <th>Actions</th>
+                              </tr>
+                           </thead>
+                           <tbody id="notificationBody">
+                              <!-- Notifications will be loaded here -->
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <div id="Syllabus" class="content-section" style="display:none;">
+                  <div class="card">
+                     <div class="container">
+                        <h2>Review the syllabus Here</h2>
+                        <p class="title"> You can view and edit the syllabus details here </p>
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th>Student First Name</th>
+                                 <th>Student Last Name</th>
+                                 <th>Student ID</th>
+                                 <th>Project Title</th>
+                                 <th>Description</th>
+                                 <th>Actions</th>
+                              </tr>
+                           </thead>
+                           <tbody id="syllabusBody">
+                              <!-- Syllabus entries will be loaded here -->
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+               <!-- Modal for Syllabus -->
+               <div class="modal fade" id="syllabusModal" tabindex="-1" aria-labelledby="syllabusModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-fullscreen">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="syllabusModalLabel">Syllabus Details</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           <textarea id="syllabusText" class="form-control" rows="10" readonly></textarea>
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" onclick="editSyllabus()" class="btn btn-primary">Edit</button>
+                           <button type="button" onclick="saveSyllabus()" class="btn btn-primary">Save</button>
+                           <button type="button" onclick="sendSyllabus()" class="btn btn-success">Send</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <div id="Submission" class="content-section" style="display:none;">
+                  <div class="card">
+                     <div class="container">
+                        <h2>Review the Submissions Here</h2>
+                        <p class="title">You can see the delivered projects here</p>
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th>Student First Name</th>
+                                 <th>Student Last Name</th>
+                                 <th>Student ID</th>
+                                 <th>Project Title</th>
+                                 <th>Description</th>
+                                 <th>Actions</th>
+                              </tr>
+                           </thead>
+                           <tbody id="submissionBody">
+                              <!-- Submissions will be loaded here -->
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+
+
+               <!-- Modal for Viewing Submission Details -->
+               <div class="modal fade" id="submissionModal" tabindex="-1" aria-labelledby="submissionModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-fullscreen">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="submissionModalLabel">Project Details</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           <textarea id="submissionText" class="form-control" rows="10" readonly></textarea>
+                        </div>
+                        <!-- Removing modal-footer to eliminate buttons -->
+                     </div>
+                  </div>
+               </div>
+
+               <div id="StudentUpdate" class="content-section" style="display:none;">
+
+                  <div class="card">
+                     <div class="container">
+                        <h2>Student Updates</h2>
+                        <p class="title">Review and update student projects and grades here.</p>
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th>Student Name</th>
+                                 <th>Student ID</th>
+                                 <th>Project Title</th>
+                                 <th>Description</th>
+                                 <th>Actions</th>
+                              </tr>
+                           </thead>
+                           <tbody id="studentUpdateBody">
+                              <!-- Student update entries will be loaded here -->
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Custom Styles for Modal Size -->
+
+
+               <div class="modal fade" id="pdfViewerModal" tabindex="-1" aria-labelledby="pdfViewerModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                     <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="pdfViewerModalLabel">PDF Viewer</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                           <iframe id="pdfIframe" style="width:100%;height:100%;" frameborder="0"></iframe>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+
+
+
+
+               <div class="modal fade" id="gradingModal" tabindex="-1" role="dialog" aria-labelledby="gradingModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                     <div class="modal-content">
+                        <div class="modal-header modal-header-custom">
+                           <h5 class="modal-title" id="gradingModalLabel">Grade Submission</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body modal-body-custom">
+                           <input type="hidden" id="currentSubmissionId" value="">
+                           <table class="table table-hover">
+                              <thead class="table-dark">
+                                 <tr>
+                                    <th>Criteria</th>
+                                    <th>Percentage</th>
+                                    <th>Grade</th>
+                                    <th>Feedback</th>
+                                 </tr>
+                              </thead>
+                              <tbody id="gradingCriteriaBody">
+                                 <!-- Rows for grading will be added here -->
+                                 <tr>
+                                    <td>Example Criteria</td>
+                                    <td>30%</td>
+                                    <td><input type="number" class="form-control grade-input" placeholder="Enter grade">
+                                    </td>
+                                    <td>
+                                       <textarea class="form-control feedback-input"
+                                          placeholder="Enter feedback"></textarea>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                              <tfoot>
+                                 <tr>
+                                    <th colspan="2">Total Grade</th>
+                                    <th id="totalGrade">0</th>
+                                    <th></th>
+                                 </tr>
+                              </tfoot>
+                           </table>
+                        </div>
+                        <div class="modal-footer modal-footer-custom">
+                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                           <button type="button" id="addGrades" class="btn btn-info">Add</button>
+                           <!-- <button type="button" class="btn btn-primary">Submit Grades</button> -->
+                           <button type="button" id="submitGradesButton" class="btn btn-primary">Submit Grades</button>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+
+
+
+
+
+
+
+
+
+         </main>
+         <a href="#" class="theme-toggle">
+            <i class="fa-regular fa-moon"></i>
+            <i class="fa-regular fa-sun"></i>
+         </a>
+      </div>
+   </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="/static/js/script.js"></script>
+
+   <script>
+      // Handles the click event on sidebar links to display corresponding content sections
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+         link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            document.querySelectorAll('.content-section').forEach(el => el.style.display = 'none');
+            if (targetElement) {
+               targetElement.style.display = 'block';
+            }
+         });
+      });
+
+      document.querySelector('.sidebar-link[data-target="Notification"]').addEventListener('click', function () {
+         fetch('/api/notifications')
+            .then(response => response.json())
+            .then(data => {
+               const tableBody = document.getElementById('notificationBody');
+               tableBody.innerHTML = ''; // Clear previous entries
+               data.forEach(notif => {
+                  const row = `<tr id="row-${notif.submission_id}">
+<td>${notif.student_name}</td>
+<td>${notif.student_id}</td>
+<td>${notif.project_title}</td>
+<td>${notif.project_description}</td>
+<td>
+<button onclick="handleAction(${notif.submission_id}, 'accept')" class="btn btn-success">
+<i class="fa fa-check"></i> Accept and Generate Syllabus
+</button>
+
+
+<button onclick="handleAction(${notif.submission_id}, 'reject')" class="btn btn-danger">
+<i class="fa fa-times"></i> Reject
+</button>
+
+</td>
+</tr>`;
+                  tableBody.innerHTML += row;
+               });
+            })
+            .catch(error => {
+               console.error('Syalbuss Sucessfully generated notifications:', error);
+               document.getElementById("notificationBody").innerHTML = `<tr><td colspan="5">Error loading notifications.</td></tr>`;
+            });
+      });
+
+
+
+
+      document.querySelector('.sidebar-link[data-target="Syllabus"]').addEventListener('click', function () {
+         fetch('/api/accepted_notifications')
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('Network response was not ok ' + response.statusText);
+               }
+               return response.json();
+            })
+            .then(data => {
+               const tableBody = document.getElementById('syllabusBody');
+               tableBody.innerHTML = ''; // Clear previous entries
+               if (Array.isArray(data)) {
+                  data.forEach(notif => {
+                     const row = `<tr id="row-${notif.notification_id}">
+<td>${notif.student_first_name}</td>
+<td>${notif.student_last_name}</td>
+<td>${notif.student_id}</td>
+<td>${notif.project_title}</td>
+<td>${notif.project_description}</td>
+<td>
+<button onclick="previewSyllabus(${notif.notification_id})" class="btn btn-info">Preview</button>
+</td>
+</tr>`;
+                     tableBody.innerHTML += row;
+                  });
+               } else {
+                  console.error('Data received is not an array:', data);
+               }
+            })
+            .catch(error => {
+               console.error('Error loading syllabus:', error);
+               document.getElementById("syllabusBody").innerHTML = `<tr><td colspan="6">Error loading data: ${error.message}</td></tr>`;
+            });
+      });
+
+
+
+
+      function previewSyllabus(notificationId) {
+         var syllabusModal = new bootstrap.Modal(document.getElementById('syllabusModal'));
+         syllabusModal.show();
+
+         fetch(`/api/syllabus/${notificationId}`)
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+               }
+               return response.json();
+            })
+            .then(data => {
+               var syllabusText = document.getElementById('syllabusText');
+               syllabusText.value = data.auto_syllabus;
+               syllabusText.setAttribute('data-notification-id', notificationId); // Store notificationId
+            })
+            .catch(error => {
+               console.error('Failed to load syllabus:', error);
+               document.getElementById('syllabusText').value = 'Failed to load syllabus data.';
+            });
+      }
+
+
+      document.querySelector('.sidebar-link[data-target="Submission"]').addEventListener('click', function () {
+         fetch('/api/delivered_submissions') // This is the new API route we discussed
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('Network response was not ok');
+               }
+               return response.json();
+            })
+            .then(data => {
+               const tableBody = document.getElementById('submissionBody');
+               tableBody.innerHTML = ''; // Clear previous entries
+               data.forEach(sub => {
+                  const row = `<tr id="row-${sub.notification_id}">
+<td>${sub.student_first_name}</td>
+<td>${sub.student_last_name}</td>
+<td>${sub.student_id}</td>
+<td>${sub.project_title}</td>
+<td>${sub.project_description}</td>
+<td>
+<!-- Define actions like previewing or finalizing the submission -->
+<button onclick="previewSubmission(${sub.notification_id})" class="btn btn-info">Preview</button>
+</td>
+</tr>`;
+                  tableBody.innerHTML += row;
+               });
+            })
+            .catch(error => {
+               console.error('Error loading submissions:', error);
+               document.getElementById("submissionBody").innerHTML = `<tr><td colspan="6">Error loading submissions.</td></tr>`;
+            });
+      });
+
+      function previewSubmission(notificationId) {
+         var submissionModal = new bootstrap.Modal(document.getElementById('submissionModal'));
+         submissionModal.show();
+
+         fetch(`/api/submission/${notificationId}`)
+            .then(response => response.json())
+            .then(data => {
+               var submissionText = document.getElementById('submissionText');
+               submissionText.value = data.auto_syllabus;
+            })
+            .catch(error => {
+               console.error('Failed to load submission details:', error);
+               document.getElementById('submissionText').value = 'Failed to load submission details.';
+            });
+      }
+
+
+
+
+
+      function handleAction(notificationId, action) {
+         if (action === 'accept') {
+            fetch(`/api/accept_notification/${notificationId}`, { method: 'POST' })
+               .then(response => response.json())
+               .then(data => {
+                  console.log('Notification accepted successfully:', data);
+                  alert('Syllabus Generated Successfully and Notification Accepted.');
+
+               })
+               .catch((error) => {
+                  console.error('Error:', error);
+                  alert('Error in accepting notification.');
+               });
+         } else if (action === 'reject') {
+            fetch(`/api/reject_notification/${notificationId}`, { method: 'POST' })
+               .then(response => response.json())
+               .then(data => {
+                  console.log('Notification rejected successfully:', data);
+                  alert(data.message);
+
+                  document.querySelectorAll('.notification-item').forEach(item => {
+                     if (item.dataset.id === String(notificationId)) {
+                        item.textContent = `${item.textContent} - Status: Rejected`;
+                     }
+                  });
+               })
+               .catch(error => {
+                  console.error('Error:', error);
+                  alert('Failed to reject the notification.');
+               });
+         }
+      }
+
+
+
+
+      function editSyllabus() {
+         var syllabusText = document.getElementById('syllabusText');
+         syllabusText.removeAttribute('readonly'); // Enable editing
+         syllabusText.focus();
+      }
+
+
+      function saveSyllabus() {
+         var syllabusText = document.getElementById('syllabusText');
+         var notificationId = syllabusText.getAttribute('data-notification-id'); // Retrieve notificationId
+
+         if (!notificationId) {
+            console.error('Notification ID is null or not set.');
+            return; // Exit the function if notificationId is not available
+         }
+
+         var updatedContent = syllabusText.value;
+
+         fetch(`/api/update_syllabus/${notificationId}`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ auto_syllabus: updatedContent })
+         })
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('Network response was not OK');
+               }
+               return response.json();
+            })
+            .then(data => {
+               console.log('Syllabus updated successfully:', data);
+
+            })
+            .catch(error => {
+               console.error('Failed to update syllabus:', error);
+            });
+      }
+
+
+      function sendSyllabus() {
+         var syllabusText = document.getElementById('syllabusText');
+         var notificationId = syllabusText.getAttribute('data-notification-id'); // Retrieve notificationId
+
+         if (!notificationId) {
+            console.error('Notification ID is null or not set.');
+            return; // Exit the function if notificationId is not available
+         }
+
+         // API call to change the status of the notification to 'Delivered'
+         fetch(`/api/change_notification_status/${notificationId}`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'Delivered' })
+         })
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('Network response was not OK');
+               }
+               return response.json();
+            })
+            .then(data => {
+               console.log('Notification status updated successfully:', data);
+               alert('Syllabus sent successfully and notification status updated to Delivered.');
+
+               var syllabusModal = bootstrap.Modal.getInstance(document.getElementById('syllabusModal'));
+               syllabusModal.hide();
+            })
+            .catch(error => {
+               console.error('Failed to update notification status:', error);
+               alert('Failed to send syllabus. Please try again.');
+            });
+      }
+
+
+
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+         link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            document.querySelectorAll('.content-section').forEach(el => el.style.display = 'none');
+            if (targetElement) {
+               targetElement.style.display = 'block';
+            }
+         });
+      });
+
+      document.querySelector('.sidebar-link[data-target="StudentUpdate"]').addEventListener('click', function () {
+         fetch('/api/get_submissions')
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('Network response was not ok');
+               }
+               return response.json();
+            })
+            .then(data => {
+               const tableBody = document.getElementById('studentUpdateBody');
+               tableBody.innerHTML = ''; // Clear previous entries
+               data.forEach(update => {
+                  const row = `<tr>
+<td>${update.student_name}</td>
+<td>${update.student_id}</td>
+<td>${update.project_title}</td>
+<td>${update.project_description}</td>
+<td>
+<button onclick="viewPDF(${update.submission_id})" class="btn btn-primary">
+<i class="fa fa-file-pdf"></i> View PDF
+</button>
+<button onclick="gradeProject(${update.submission_id})" class="btn btn-secondary">
+<i class="fa fa-edit"></i> Grade
+</button>
+
+</td>
+</tr>`;
+                  tableBody.innerHTML += row;
+               });
+            })
+            .catch(error => {
+               console.error('Error loading student updates:', error);
+               document.getElementById("studentUpdateBody").innerHTML = `<tr><td colspan="5">Error loading updates.</td></tr>`;
+            });
+      });
+
+
+
+
+      function viewPDF(submissionId) {
+         const url = `/api/view_pdf/${submissionId}`;
+         const pdfIframe = document.getElementById('pdfIframe');
+         pdfIframe.src = url; // Set the PDF URL
+
+         const pdfModal = new bootstrap.Modal(document.getElementById('pdfViewerModal'));
+         pdfModal.show(); // Open the modal
+      }
+
+
+
+
+
+      function gradeProject(submissionId) {
+         fetch(`/api/get_rubric_by_submission/${submissionId}`)
+            .then(response => response.json())
+            .then(data => {
+               if (!data.criteria) {
+                  console.error('No criteria found:', data);
+                  alert('Failed to load grading criteria. Please check the server response.');
+                  return;
+               }
+
+               const gradingCriteriaBody = document.getElementById('gradingCriteriaBody');
+               gradingCriteriaBody.innerHTML = ''; // Clear previous entries
+
+               data.criteria.forEach(crit => {
+                  const row = `
+<tr>
+<td>${crit.name}</td>
+<td>${crit.weight}</td>
+<td><input type="number" class="form-control grade-input" placeholder="Enter grade"></td>
+<td><textarea class="form-control feedback-input" placeholder="Enter feedback"></textarea></td>
+</tr>
+`;
+                  gradingCriteriaBody.innerHTML += row;
+               });
+
+               // Show the modal
+               const gradingModal = new bootstrap.Modal(document.getElementById('gradingModal'));
+               gradingModal.show();
+
+               // Store the submission_id in the modal for later use
+               document.getElementById('gradingModal').setAttribute('data-submission-id', submissionId);
+            })
+            .catch(error => {
+               console.error('Error fetching grading criteria:', error);
+               alert('Failed to load grading criteria. Please check the server.');
+            });
+      }
+
+
+
+
+
+      const submitButton = document.getElementById('submitGradesButton');
+      submitButton.removeEventListener('click', submitGrades);
+      submitButton.addEventListener('click', submitGrades);
+
+
+
+
+      function submitGrades() {
+         const modalElement = document.getElementById('gradingModal');
+         const submissionId = modalElement.getAttribute('data-submission-id');
+
+         if (!submissionId) {
+            alert("Submission ID is missing.");
+            return;
+         }
+
+         const grades = Array.from(document.querySelectorAll('#gradingCriteriaBody tr')).map(row => ({
+            criterion_name: row.cells[0].textContent.trim(),
+            percentage: row.cells[1].textContent.trim(),
+            assigned_score: row.cells[2].querySelector('input').value,
+            feedback: row.cells[3].querySelector('textarea').value,
+         }));
+
+         fetch('/api/submit_grades', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ submission_id: submissionId, grades: grades })
+         })
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+               }
+               return response.json();
+            })
+            .then(result => {
+               alert(result.message || 'Grades submitted successfully');
+               var gradingModal = bootstrap.Modal.getInstance(document.getElementById('gradingModal'));
+               gradingModal.hide();
+            })
+            .catch(error => {
+               console.error('Error submitting grades:', error);
+               alert('Failed to submit grades. Please check your inputs and try again.');
+            });
+      }
+
+
+
+
+
+
+
+
+
+      document.getElementById('addGrades').addEventListener('click', function () {
+         let totalAssignedScores = 0;
+         const gradeInputs = document.querySelectorAll('.grade-input');
+         console.log('Found grade inputs:', gradeInputs.length);
+
+         gradeInputs.forEach(input => {
+            console.log('Current input value:', input.value); // Log each input value
+            const score = parseFloat(input.value) || 0;
+            totalAssignedScores += score;
+         });
+
+         console.log('Total Assigned Scores:', totalAssignedScores); // Log the calculated total
+
+         const totalGradeElement = document.getElementById('totalGrade');
+         if (totalGradeElement) {
+            totalGradeElement.textContent = totalAssignedScores.toFixed(2);
+         } else {
+            console.error('Total grade display element not found');
+         }
+      });
+
+
+
+
+
+
+      function calculateTotalGrade() {
+         const gradeInputs = document.querySelectorAll('.grade-input');
+         let total = 0;
+         gradeInputs.forEach(input => {
+            const gradeValue = parseFloat(input.value) || 0;
+            total += gradeValue;
+         });
+         document.getElementById('totalGrade').textContent = total.toFixed(2);
+      }
+
+
+
+      function fetchStudentSubmissions() {
+         fetch('/api/get_submissions') // Endpoint to fetch submissions made to the professor
+            .then(response => response.json())
+            .then(submissions => {
+               const submissionsTable = document.getElementById('studentUpdateBody');
+               submissionsTable.innerHTML = ''; // Clear existing entries
+               submissions.forEach(submission => {
+                  submissionsTable.innerHTML += `
+<tr>
+<td>${submission.student_name}</td>
+<td>${submission.student_id}</td>
+<td>${submission.project_title}</td>
+<td>${submission.description}</td>
+<td>
+<button class="btn btn-info" onclick="openGradeModal(${submission.submission_id})">Grade</button>
+</td>
+</tr>
+`;
+               });
+            })
+            .catch(error => console.error('Error loading submissions:', error));
+      }
+
+      function openGradeModal(submissionId) {
+         // Store submissionId in modal for later use
+         const modalElement = document.getElementById('gradingModal');
+         modalElement.setAttribute('data-submission-id', submissionId);
+         new bootstrap.Modal(modalElement).show();
+      }
+
+
+      function fetchGradesForProfessor() {
+         // This function could be called on a specific action or page load
+         fetch('/api/professor/grades')
+            .then(response => response.json())
+            .then(grades => {
+               // Display grades in the professor's dashboard
+            })
+            .catch(error => console.error('Error fetching grades:', error));
+      }
+
+
+
+
+      document.addEventListener('DOMContentLoaded', function () {
+         // Ensure the Dashboard section is visible initially
+         const dashboard = document.getElementById('dashboard');
+         if (dashboard) {
+            dashboard.style.display = 'block'; // Display the dashboard section
+         } else {
+            console.error('Dashboard element not found'); // Error handling if dashboard is not found
+         }
+
+         // Highlight the Dashboard link in the sidebar as active
+         const dashboardLink = document.querySelector('.sidebar-link[data-target="dashboard"]');
+         if (dashboardLink) {
+            dashboardLink.classList.add('active-link');
+         } else {
+            console.error('Dashboard link not found'); // Error handling if link is not found
+         }
+
+
+         fetchNotifications();
+      });
+
+
+
+
+
+
+
+
+      document.addEventListener('DOMContentLoaded', function () {
+         const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+         sidebarLinks.forEach(link => {
+            link.addEventListener('click', function () {
+               // Remove active class from all links
+               sidebarLinks.forEach(l => l.classList.remove('active'));
+
+               // Add active class to the clicked link
+               this.classList.add('active');
+            });
+         });
+      });
+
+
+
+
+
+
+
+   </script>
+
+</body>
+
+</html>
